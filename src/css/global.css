@@ -1,15 +1,47 @@
-/* Lógica de Carregamento (FOUC) */
 body {
-  background: var(--background-primary);
+  background-color: var(--background-primary);
+  background-image: url("../assets/img/background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: var(--content-secondary);
   font-family: var(--ff-roboto-flex);
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+
+  /* Lógica de Carregamento (FOUC) */
   opacity: 0;
 }
 
 .ready body {
   opacity: 1;
   transition: opacity 0s ease-in;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.icon--brand {
+  color: var(--content-brand);
+}
+
+.icon--primary {
+  color: var(--content-primary);
+}
+
+.icon--sm {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+}
+
+.icon--md {
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+.icon--lg {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
 }
