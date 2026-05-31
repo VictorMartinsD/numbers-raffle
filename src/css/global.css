@@ -67,7 +67,13 @@ body {
 }
 
 .brand-header h1 {
-  line-height: 1;
+  color: var(--content-primary);
+  font-family: var(--ff-sora);
+  font-size: 1.5rem;
+  font-weight: var(--fw-xl);
+  line-height: var(--lh-sm);
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
 }
 
 .hero-section {
@@ -77,6 +83,20 @@ body {
 
 .tagline {
   display: block;
+  font: var(--overline);
+  background: var(--gradient-content);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-transform: uppercase;
+}
+
+.hero-section h1 {
+  color: var(--content-primary);
+  font: var(--display-medium);
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
 }
 
 .panel-options,
@@ -87,12 +107,39 @@ body {
 .panel-header {
   display: grid;
   gap: 2px;
+  color: var(--content-primary);
+  font: var(--label-medium);
 }
 
 .panel-header p,
 .hero-section h1,
 .page-footer p {
   margin: 0;
+}
+
+.panel-header h2 {
+  color: var(--content-primary);
+  font: var(--label-medium);
+  text-transform: uppercase;
+}
+
+.panel-header p {
+  color: var(--content-secondary);
+  font: var(--paragraph-medium);
+}
+
+.panel-results h2 {
+  color: var(--color-primary);
+  font: var(--label-medium);
+}
+
+.result-subtitle {
+  text-transform: uppercase;
+}
+
+#btn-restart span {
+  color: var(--content-tertiary);
+  text-transform: uppercase;
 }
 
 .inputs-container {
@@ -108,12 +155,18 @@ body {
 .input-group label {
   width: 100%;
   text-align: center;
+  color: var(--content-secondary);
+  font: var(--label-medium);
+  text-transform: uppercase;
 }
 
 .input-group input {
   width: 100%;
   padding: 8px 4px;
   text-align: center;
+  color: var(--content-primary);
+  font: var(--display-small);
+  background-color: var(--background-secondary);
 }
 
 .toggle-group {
@@ -123,12 +176,23 @@ body {
   margin-top: 20px;
 }
 
+.toggle-group label {
+  color: var(--content-primary);
+  font: var(--paragraph-medium);
+}
+
 .btn-draw {
   margin-top: 40px;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
+}
+
+.btn-draw span {
+  color: var(--content-primary);
+  font: var(--label-medium);
+  text-transform: uppercase;
 }
 
 .faq-section {
@@ -146,11 +210,12 @@ body {
 
 .title-faq {
   text-align: left;
+  color: var(--content-brand);
+  font: var(--paragraph-medium);
 }
 
 .content-faq {
   display: grid;
-  gap: 8px;
 }
 
 .page-footer {
@@ -215,12 +280,18 @@ body {
     grid-row: 1 / span 2;
   }
 
+  .panel-header p {
+    color: var(--content-tertiary);
+    font: var(--paragraph-large);
+  }
+
   .tagline {
     margin-bottom: 12px;
   }
 
   .hero-section h1 {
     margin-bottom: 38px;
+    font: var(--display-large);
   }
 
   .page-footer {
