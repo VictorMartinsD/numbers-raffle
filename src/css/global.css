@@ -144,16 +144,19 @@ body {
 
 .inputs-container {
   margin-block: 40px 20px;
-  gap: 4px;
+  gap: 12px;
+  justify-content: flex-start;
 }
 
 .input-group {
-  justify-items: stretch;
+  width: 80%;
+  max-width: 140px;
+  justify-items: start;
   gap: 4px;
 }
 
 .input-group label {
-  width: 100%;
+  width: 80%;
   text-align: center;
   color: var(--content-secondary);
   font: var(--label-medium);
@@ -161,12 +164,25 @@ body {
 }
 
 .input-group input {
-  width: 100%;
+  width: 80%;
   padding: 8px 4px;
   text-align: center;
   color: var(--content-primary);
   font: var(--display-small);
   background-color: var(--background-secondary);
+  border-radius: var(--radius-md);
+  border: none;
+}
+
+.input-group input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.input-group input[type="number"]::-webkit-inner-spin-button,
+.input-group input[type="number"]::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
 }
 
 .toggle-group {
