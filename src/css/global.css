@@ -185,6 +185,60 @@ body {
   margin: 0;
 }
 
+.toggle-switch {
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  width: 30px;
+  height: 20px;
+  padding: 3px;
+  margin: 0;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 16px;
+  background-color: var(--content-tertiary);
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.toggle-switch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--gradient-background);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.toggle-switch::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--content-primary);
+  transform: translateX(0);
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toggle-switch:checked::after {
+  opacity: 1;
+}
+
+.toggle-switch:checked::before {
+  transform: translateX(10px);
+}
+
+.toggle-switch:focus-visible {
+  outline: 2px solid var(--content-brand);
+  outline-offset: 3px;
+}
+
 .toggle-group {
   display: flex;
   align-items: center;
