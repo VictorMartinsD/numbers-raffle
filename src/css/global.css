@@ -251,18 +251,130 @@ body {
   font: var(--paragraph-medium);
 }
 
+@keyframes btn-fill-hover {
+  from {
+    background-color: var(--background-tertiary);
+  }
+  12.5% {
+    background-color: var(--background-secondary);
+  }
+  to {
+    background-color: var(--background-secondary);
+  }
+}
+
+@keyframes btn-border-sweep {
+  from {
+    opacity: 0.2;
+    background-position: 0% 50%;
+  }
+  10% {
+    opacity: 1;
+    background-position: 45% 50%;
+  }
+  to {
+    opacity: 1;
+    background-position: 220% 50%;
+  }
+}
+
+@keyframes draw-arrow-shift {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes restart-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .btn-draw {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   margin-top: 40px;
+  padding: 16px;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
+  background-color: var(--background-tertiary);
+  border: 1px solid transparent;
+  border-radius: 8px;
+}
+
+.btn-draw::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--gradient-border);
+  background-size: 320% 100%;
+  background-position: 0% 50%;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.btn-draw.is-animating {
+  animation: btn-fill-hover 2s ease 1 both;
+}
+
+.btn-draw.is-animating::before {
+  animation: btn-border-sweep 2s linear 1 both;
+}
+
+#panel-setup .btn-draw.is-animating .icon {
+  animation: draw-arrow-shift 2s ease 1 both;
+}
+
+#btn-restart.btn-draw.is-animating .loading-circle {
+  transform-origin: center;
+  animation: restart-ring-spin 2s linear 1 both;
+}
+
+#btn-restart.btn-draw.is-animating {
+  animation-duration: 1.5s;
+}
+
+#btn-restart.btn-draw.is-animating::before {
+  animation-duration: 1.5s;
+}
+
+#btn-restart.btn-draw.is-animating .loading-circle {
+  animation-duration: 1.5s;
 }
 
 .btn-draw span {
+  position: relative;
+  z-index: 1;
   color: var(--content-primary);
   font: var(--label-medium);
   text-transform: uppercase;
+}
+
+.btn-draw .icon {
+  position: relative;
+  z-index: 1;
 }
 
 .faq-section {
