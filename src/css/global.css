@@ -145,20 +145,21 @@ body {
 .inputs-container {
   margin-block: 40px 20px;
   justify-content: flex-start;
+  gap: 12px;
 }
 
 .input-group {
-  width: 80%;
-  max-width: 140px;
+  width: 90px;
+  flex-shrink: 0;
   justify-items: start;
   gap: 4px;
 }
 
 .input-group label {
-  width: 80%;
+  width: 100%;
   text-align: center;
   color: var(--content-secondary);
-  font: var(--label-medium);
+  font: var(--label-small);
   text-transform: uppercase;
   transition: color 0.2s ease;
 }
@@ -170,7 +171,7 @@ body {
 
 .input-group input {
   position: relative;
-  width: 80%;
+  width: 100%;
   padding: 8px 4px;
   text-align: center;
   color: var(--content-primary);
