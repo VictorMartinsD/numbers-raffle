@@ -154,6 +154,9 @@ body {
   flex-shrink: 0;
   justify-items: start;
   gap: 4px;
+  padding: 1px;
+  border-radius: var(--radius-md);
+  isolation: isolate;
 }
 
 .input-group label {
@@ -162,7 +165,9 @@ body {
   color: var(--content-secondary);
   font: var(--label-small);
   text-transform: uppercase;
-  transition: color 0.2s ease;
+  transition: color 300ms ease;
+  position: relative;
+  z-index: 1;
 }
 
 .input-group:has(input:hover) label,
@@ -170,8 +175,38 @@ body {
   color: var(--content-brand);
 }
 
+.input-group::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  padding: 1px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-border);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  transition: opacity 300ms ease;
+}
+
+.input-group:has(input:hover)::before,
+.input-group:has(input:focus)::before {
+  opacity: 1;
+}
+
 .input-group input {
   position: relative;
+  z-index: 1;
   width: 100%;
   padding: 8px 4px;
   text-align: center;
@@ -179,13 +214,9 @@ body {
   font: var(--display-small);
   background-color: var(--background-secondary);
   border-radius: var(--radius-md);
-  border: 1px solid transparent;
+  border: none;
   caret-color: transparent;
-
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    background-image 0.2s ease;
+  transition: background-color 300ms ease;
 }
 
 @keyframes caret-blink {
@@ -201,24 +232,11 @@ body {
 
 .input-group input:hover {
   background-color: var(--background-tertiary);
-  border: 1px solid transparent;
-  padding: 8px 4px;
-  background:
-    linear-gradient(var(--background-tertiary), var(--background-tertiary)) padding-box,
-    var(--gradient-border) border-box;
-  background-clip: padding-box, border-box;
 }
 
 .input-group input:focus {
   outline: none;
   background-color: var(--background-tertiary);
-  border: 2px solid transparent;
-  padding: 7px 4px;
-  background:
-    linear-gradient(var(--background-tertiary), var(--background-tertiary)) padding-box,
-    var(--gradient-border) border-box;
-  background-clip: padding-box, border-box;
-
   animation: caret-blink 1.2s ease-in-out infinite;
 }
 
