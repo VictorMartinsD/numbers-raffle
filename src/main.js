@@ -2,23 +2,40 @@ import "./css/index.css";
 
 document.documentElement.classList.add("ready");
 
-const DRAW_BUTTON_ANIMATION_CLASS = "is-animating";
+const quantityInput = document.getElementById("quantity");
+const minValueInput = document.getElementById("min-value");
+const maxValueInput = document.getElementById("max-value");
 const drawButtons = document.querySelectorAll(".btn-draw");
 
-drawButtons.forEach((button) => {
-  button.addEventListener("mouseenter", () => {
-    if (button.classList.contains(DRAW_BUTTON_ANIMATION_CLASS)) {
-      return;
-    }
+const DRAW_BUTTON_ANIMATION_CLASS = "is-animating";
 
-    button.classList.add(DRAW_BUTTON_ANIMATION_CLASS);
+function setupButtonAnimations() {
+  drawButtons.forEach((button) => {
+    button.addEventListener("mouseenter", () => {
+      if (button.classList.contains(DRAW_BUTTON_ANIMATION_CLASS)) return;
+      button.classList.add(DRAW_BUTTON_ANIMATION_CLASS);
+    });
+
+    button.addEventListener("animationend", (event) => {
+      if (event.animationName !== "btn-fill-hover") return;
+      button.classList.remove(DRAW_BUTTON_ANIMATION_CLASS);
+    });
   });
+}
 
-  button.addEventListener("animationend", (event) => {
-    if (event.animationName !== "btn-fill-hover") {
-      return;
-    }
+function setupInputValidations() {
+  const limitLength = (inputElement, maxLength) => {
+    inputElement.addEventListener("input", (e) => {
+      if (e.target.value.length > maxLength) {
+        e.target.value = e.target.value.slice(0, maxLength);
+      }
+    });
+  };
 
-    button.classList.remove(DRAW_BUTTON_ANIMATION_CLASS);
-  });
-});
+  limitLength(quantityInput, 1);
+  limitLength(minValueInput, 3);
+  limitLength(maxValueInput, 3);
+}
+
+setupButtonAnimations();
+setupInputValidations();
