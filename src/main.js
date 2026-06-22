@@ -6,6 +6,8 @@ const quantityInput = document.getElementById("quantity");
 const minValueInput = document.getElementById("min-value");
 const maxValueInput = document.getElementById("max-value");
 const drawButtons = document.querySelectorAll(".btn-draw");
+const btnDraw = document.getElementById("btn-draw");
+const btnRestart = document.getElementById("btn-restart");
 
 const DRAW_BUTTON_ANIMATION_CLASS = "is-animating";
 
@@ -48,5 +50,29 @@ function setupInputValidations() {
   limitLength(maxValueInput, 3);
 }
 
+function setupPanelToggle() {
+  const setupHeader = document.getElementById("setup-header");
+  const inputsContainer = document.getElementById("inputs-container");
+  const toggleGroup = document.getElementById("toggle-group");
+  const panelResult = document.getElementById("panel-result");
+
+  btnDraw.addEventListener("click", () => {
+    setupHeader.classList.add("u-hidden");
+    inputsContainer.classList.add("u-hidden");
+    toggleGroup.classList.add("u-hidden");
+    btnDraw.classList.add("u-hidden");
+    panelResult.classList.remove("u-hidden");
+  });
+
+  btnRestart.addEventListener("click", () => {
+    setupHeader.classList.remove("u-hidden");
+    inputsContainer.classList.remove("u-hidden");
+    toggleGroup.classList.remove("u-hidden");
+    btnDraw.classList.remove("u-hidden");
+    panelResult.classList.add("u-hidden");
+  });
+}
+
 setupButtonAnimations();
 setupInputValidations();
+setupPanelToggle();

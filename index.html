@@ -56,7 +56,7 @@
 
       <section class="draw-panel">
         <div id="panel-setup" class="panel-options">
-          <div class="panel-header">
+          <div class="panel-header" id="setup-header">
             <h2>Quero sortear:</h2>
             <p>
               defina o intervalo e a quantidade de números, clique em "Sortear" e veja os resultados na tela. É rápido e
@@ -64,7 +64,7 @@
             </p>
           </div>
 
-          <div class="inputs-container flex">
+          <div class="inputs-container flex" id="inputs-container">
             <div class="input-group grid">
               <label for="quantity">Números</label>
               <input type="number" id="quantity" value="2" />
@@ -81,12 +81,12 @@
             </div>
           </div>
 
-          <div class="toggle-group">
+          <div class="toggle-group" id="toggle-group">
             <input type="checkbox" id="no-repeat" class="toggle-switch" />
             <label for="no-repeat">Não repetir número</label>
           </div>
 
-          <button type="button" class="btn-draw flex">
+          <button type="button" id="btn-draw" class="btn-draw flex">
             <span>Sortear</span>
             <svg class="icon icon--primary icon--md" aria-hidden="true">
               <use href="/src/assets/img/icons.svg#right-arrow"></use>
