@@ -25,10 +25,21 @@ function setupButtonAnimations() {
 
 function setupInputValidations() {
   const limitLength = (inputElement, maxLength) => {
+    inputElement.addEventListener("keydown", (e) => {
+      const invalidChars = ["-", "+", ".", ",", "e", "E"];
+      if (invalidChars.includes(e.key)) {
+        e.preventDefault();
+      }
+    });
+
     inputElement.addEventListener("input", (e) => {
       if (e.target.value.length > maxLength) {
         e.target.value = e.target.value.slice(0, maxLength);
       }
+    });
+
+    inputElement.addEventListener("focus", (e) => {
+      e.target.select();
     });
   };
 
