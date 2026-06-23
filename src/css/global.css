@@ -146,6 +146,7 @@ body {
   margin-block: 40px 20px;
   justify-content: flex-start;
   gap: 12px;
+  position: relative;
 }
 
 .input-group {
@@ -559,5 +560,41 @@ body {
 
   .page-footer {
     max-width: 1100px;
+  }
+}
+
+.error-tooltip {
+position: absolute;
+bottom: calc(100% + 4px);
+right: 0;
+background-color: var(--accent-red);
+color: var(--content-primary);
+padding: 8px 12px;
+border-radius: var(--radius-md);
+font: var(--label-small);
+white-space: nowrap;
+z-index: 10;
+box-shadow: 0 4px 12px rgba(247, 70, 70, 0.3);
+animation: tooltip-fade 200ms ease-out;
+}
+
+.error-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  right: 40px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--accent-red) transparent transparent transparent;
+}
+
+@keyframes tooltip-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
