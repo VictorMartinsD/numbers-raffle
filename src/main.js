@@ -55,8 +55,18 @@ function setupPanelToggle() {
   const inputsContainer = document.getElementById("inputs-container");
   const toggleGroup = document.getElementById("toggle-group");
   const panelResult = document.getElementById("panel-result");
+  const errorTooltip = document.getElementById("error-tooltip");
 
   btnDraw.addEventListener("click", () => {
+    const min = parseInt(minValueInput.value, 10);
+    const max = parseInt(maxValueInput.value, 10);
+
+    if (min >= max) {
+      errorTooltip.classList.remove("u-hidden");
+      return;
+    }
+
+    errorTooltip.classList.add("u-hidden");
     setupHeader.classList.add("u-hidden");
     inputsContainer.classList.add("u-hidden");
     toggleGroup.classList.add("u-hidden");
@@ -71,6 +81,10 @@ function setupPanelToggle() {
     btnDraw.classList.remove("u-hidden");
     panelResult.classList.add("u-hidden");
   });
+
+  const hideError = () => errorTooltip.classList.add("u-hidden");
+  minValueInput.addEventListener("input", hideError);
+  maxValueInput.addEventListener("input", hideError);
 }
 
 setupButtonAnimations();
