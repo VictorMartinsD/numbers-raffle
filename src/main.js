@@ -48,6 +48,14 @@ function setupInputValidations() {
   limitLength(quantityInput, 1);
   limitLength(minValueInput, 3);
   limitLength(maxValueInput, 3);
+
+  const inputsContainer = document.getElementById("inputs-container");
+  inputsContainer.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      btnDraw.click();
+    }
+  });
 }
 
 function setupPanelToggle() {
