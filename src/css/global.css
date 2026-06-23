@@ -567,7 +567,7 @@ body {
 position: absolute;
 bottom: calc(100% + 4px);
 right: 0;
-background-color: var(--accent-red);
+background-color: #f35656;
 color: var(--content-primary);
 padding: 8px 12px;
 border-radius: var(--radius-md);
@@ -585,7 +585,7 @@ animation: tooltip-fade 200ms ease-out;
   right: 40px;
   border-width: 6px;
   border-style: solid;
-  border-color: var(--accent-red) transparent transparent transparent;
+  border-color: #f35656 transparent transparent transparent;
 }
 
 @keyframes tooltip-fade {
