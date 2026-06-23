@@ -589,8 +589,12 @@ body {
 
 .error-tooltip {
 position: absolute;
-bottom: calc(100% + 4px);
-right: 0;
+bottom: calc(100% + 0px);
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+align-items: center;
+gap: 8px;
 background-color: #f35656;
 color: var(--content-primary);
 padding: 8px 12px;
@@ -602,23 +606,18 @@ box-shadow: 0 4px 12px rgba(247, 70, 70, 0.3);
 animation: tooltip-fade 200ms ease-out;
 }
 
-.error-tooltip::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  right: 40px;
-  border-width: 6px;
-  border-style: solid;
-  border-color: #f35656 transparent transparent transparent;
+.error-tooltip small {
+  font: inherit;
+  color: inherit;
 }
 
 @keyframes tooltip-fade {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translate(-50%, 6px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 }

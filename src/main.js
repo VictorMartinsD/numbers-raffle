@@ -75,7 +75,7 @@ function setupPanelToggle() {
   const toggleGroup = document.getElementById("toggle-group");
   const panelResult = document.getElementById("panel-result");
   const errorTooltip = document.getElementById("error-tooltip");
-  const tooltipText = errorTooltip.querySelector("span");
+  const tooltipText = document.getElementById("error-message");
 
   btnDraw.addEventListener("click", () => {
     if (!quantityInput.value || !minValueInput.value || !maxValueInput.value) {

@@ -73,15 +73,18 @@
             <div class="input-group grid">
               <label for="min-value">De</label>
               <input type="number" id="min-value" value="1" />
+
+              <div id="error-tooltip" class="error-tooltip u-hidden">
+                <svg class="icon icon--primary icon--sm" aria-hidden="true">
+                  <use href="/src/assets/img/icons.svg#icon-alert"></use>
+                </svg>
+                <small id="error-message"></small>
+              </div>
             </div>
 
             <div class="input-group grid">
               <label for="max-value">A</label>
               <input type="number" id="max-value" value="100" />
-            </div>
-
-            <div id="error-tooltip" class="error-tooltip u-hidden">
-              <span></span>
             </div>
           </div>
 
