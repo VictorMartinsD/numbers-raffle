@@ -26,15 +26,26 @@ function setupButtonAnimations() {
 }
 
 function setupInputValidations() {
-  const limitLength = (inputElement, maxLength) => {
+  const limitLength = (inputElement, maxLength, allowZero = true) => {
     inputElement.addEventListener("keydown", (e) => {
       const invalidChars = ["-", "+", ".", ",", "e", "E"];
+      
       if (invalidChars.includes(e.key)) {
+        e.preventDefault();
+        return;
+      }
+
+      if (!allowZero && e.key === "0" && e.target.value.length === 0) {
         e.preventDefault();
       }
     });
 
     inputElement.addEventListener("input", (e) => {
+      if (!allowZero && e.target.value === "0") {
+        e.target.value = "";
+        return;
+      }
+
       if (e.target.value.length > maxLength) {
         e.target.value = e.target.value.slice(0, maxLength);
       }
@@ -45,7 +56,7 @@ function setupInputValidations() {
     });
   };
 
-  limitLength(quantityInput, 1);
+  limitLength(quantityInput, 1, false);
   limitLength(minValueInput, 3);
   limitLength(maxValueInput, 3);
 
