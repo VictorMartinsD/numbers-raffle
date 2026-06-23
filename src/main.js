@@ -75,12 +75,26 @@ function setupPanelToggle() {
   const toggleGroup = document.getElementById("toggle-group");
   const panelResult = document.getElementById("panel-result");
   const errorTooltip = document.getElementById("error-tooltip");
+  const tooltipText = errorTooltip.querySelector("span");
 
   btnDraw.addEventListener("click", () => {
+    if (!quantityInput.value || !minValueInput.value || !maxValueInput.value) {
+      tooltipText.textContent = "Nenhum campo pode estar vazio!";
+      errorTooltip.classList.remove("u-hidden");
+      return;
+    }
+
     const min = parseInt(minValueInput.value, 10);
     const max = parseInt(maxValueInput.value, 10);
 
+    if (min === 0 || max === 0) {
+      tooltipText.textContent = "O valor não pode ser 0.";
+      errorTooltip.classList.remove("u-hidden");
+      return;
+    }
+
     if (min >= max) {
+      tooltipText.textContent = "O valor inicial deve ser menor que o final!";
       errorTooltip.classList.remove("u-hidden");
       return;
     }
@@ -102,6 +116,7 @@ function setupPanelToggle() {
   });
 
   const hideError = () => errorTooltip.classList.add("u-hidden");
+  quantityInput.addEventListener("input", hideError);
   minValueInput.addEventListener("input", hideError);
   maxValueInput.addEventListener("input", hideError);
 }
