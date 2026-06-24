@@ -10,6 +10,9 @@ const drawButtons = document.querySelectorAll(".btn-draw");
 const btnDraw = document.getElementById("btn-draw");
 const btnRestart = document.getElementById("btn-restart");
 const numbersOutput = document.getElementById("numbers-output");
+const resultCountText = document.getElementById("result-count"); 
+
+let drawCount = 0;
 
 const DRAW_BUTTON_ANIMATION_CLASS = "is-animating";
 
@@ -143,6 +146,9 @@ function setupPanelToggle() {
       numberElement.textContent = num;
       numbersOutput.appendChild(numberElement);
     });
+
+    drawCount++;
+    resultCountText.textContent = `${drawCount}º Resultado`;
 
     setupHeader.classList.add("u-hidden");
     inputsContainer.classList.add("u-hidden");
