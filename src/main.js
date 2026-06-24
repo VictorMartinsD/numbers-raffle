@@ -5,9 +5,11 @@ document.documentElement.classList.add("ready");
 const quantityInput = document.getElementById("quantity");
 const minValueInput = document.getElementById("min-value");
 const maxValueInput = document.getElementById("max-value");
+const noRepeatCheckbox = document.getElementById("no-repeat");
 const drawButtons = document.querySelectorAll(".btn-draw");
 const btnDraw = document.getElementById("btn-draw");
 const btnRestart = document.getElementById("btn-restart");
+const numbersOutput = document.getElementById("numbers-output");
 
 const DRAW_BUTTON_ANIMATION_CLASS = "is-animating";
 
@@ -69,6 +71,27 @@ function setupInputValidations() {
   });
 }
 
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateDrawResults(quantity, min, max, noRepeat) {
+  const results = [];
+
+  if (noRepeat) {
+    const uniqueNumbers = new Set();
+    while (uniqueNumbers.size < quantity) {
+      uniqueNumbers.add(getRandomNumber(min, max));
+    }
+    return Array.from(uniqueNumbers);
+  }
+
+  for (let i = 0; i < quantity; i++) {
+    results.push(getRandomNumber(min, max));
+  }
+  return results;
+}
+
 function setupPanelToggle() {
   const setupHeader = document.getElementById("setup-header");
   const inputsContainer = document.getElementById("inputs-container");
@@ -78,28 +101,49 @@ function setupPanelToggle() {
   const tooltipText = document.getElementById("error-message");
 
   btnDraw.addEventListener("click", () => {
-    if (!quantityInput.value || !minValueInput.value || !maxValueInput.value) {
-      tooltipText.textContent = "Nenhum campo pode estar vazio!";
+  if (!quantityInput.value || !minValueInput.value || !maxValueInput.value) {
+    tooltipText.textContent = "Nenhum campo pode estar vazio!";
+    errorTooltip.classList.remove("u-hidden");
+    return;
+  }
+
+  const quantity = parseInt(quantityInput.value.slice(0, 1), 10);
+  const min = parseInt(minValueInput.value.slice(0, 3), 10);
+  const max = parseInt(maxValueInput.value.slice(0, 3), 10);
+  const noRepeat = noRepeatCheckbox.checked;
+
+  if (min === 0 || max === 0) {
+    tooltipText.textContent = "O valor não pode ser 0.";
+    errorTooltip.classList.remove("u-hidden");
+    return;
+    }
+
+    if (min > max) {
+      tooltipText.textContent = "O valor inicial deve ser menor ou igual ao final!";
       errorTooltip.classList.remove("u-hidden");
       return;
     }
 
-    const min = parseInt(minValueInput.value, 10);
-    const max = parseInt(maxValueInput.value, 10);
+    const totalAvailable = (max - min) + 1;
 
-    if (min === 0 || max === 0) {
-      tooltipText.textContent = "O valor não pode ser 0.";
-      errorTooltip.classList.remove("u-hidden");
-      return;
-    }
-
-    if (min >= max) {
-      tooltipText.textContent = "O valor inicial deve ser menor que o final!";
+    if (noRepeat && quantity > totalAvailable) {
+      tooltipText.textContent = "A quantidade é maior do que o intervalo permite!";
       errorTooltip.classList.remove("u-hidden");
       return;
     }
 
     errorTooltip.classList.add("u-hidden");
+    
+    const drawResults = generateDrawResults(quantity, min, max, noRepeat);
+
+    numbersOutput.innerHTML = "";
+    drawResults.forEach((num) => {
+      const numberElement = document.createElement("span");
+      numberElement.className = "draw-number";
+      numberElement.textContent = num;
+      numbersOutput.appendChild(numberElement);
+    });
+
     setupHeader.classList.add("u-hidden");
     inputsContainer.classList.add("u-hidden");
     toggleGroup.classList.add("u-hidden");
@@ -113,12 +157,14 @@ function setupPanelToggle() {
     toggleGroup.classList.remove("u-hidden");
     btnDraw.classList.remove("u-hidden");
     panelResult.classList.add("u-hidden");
+    numbersOutput.innerHTML = "";
   });
 
   const hideError = () => errorTooltip.classList.add("u-hidden");
   quantityInput.addEventListener("input", hideError);
   minValueInput.addEventListener("input", hideError);
   maxValueInput.addEventListener("input", hideError);
+  noRepeatCheckbox.addEventListener("change", hideError);
 }
 
 setupButtonAnimations();
