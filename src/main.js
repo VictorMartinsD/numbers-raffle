@@ -140,10 +140,18 @@ function setupPanelToggle() {
     const drawResults = generateDrawResults(quantity, min, max, noRepeat);
 
     numbersOutput.innerHTML = "";
-    drawResults.forEach((num) => {
-      const numberElement = document.createElement("span");
+    drawResults.forEach((num, index) => {
+      const numberElement = document.createElement("div");
       numberElement.className = "draw-number";
       numberElement.textContent = num;
+
+      const isOnlyNumber = drawResults.length === 1;
+      const isLastOdd = (index === drawResults.length - 1) && (drawResults.length % 2 !== 0);
+
+      if (isOnlyNumber || isLastOdd) {
+        numberElement.classList.add("is-centered");
+      }
+
       numbersOutput.appendChild(numberElement);
     });
 

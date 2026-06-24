@@ -643,12 +643,32 @@ animation: tooltip-fade 200ms ease-out;
 }
 
 .numbers-display {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 40px;
+  align-items: center;
+  gap: 16px 4px;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto 40px auto;
 }
 
 .numbers-display:empty {
   margin-bottom: 0;
+}
+
+.draw-number {
+  flex: 0 0 calc(50% - 2px);
+  text-align: center;
+  color: var(--content-brand);
+  font-family: var(--ff-roboto-mono), 'Roboto Mono', monospace;
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 150%;
+}
+
+.draw-number.is-centered {
+  flex: 0 0 100%;
 }
 
 .sorteio-animation-container {
