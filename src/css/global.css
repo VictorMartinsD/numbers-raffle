@@ -32,7 +32,10 @@ body {
   color: var(--content-secondary);
   font-family: var(--ff-roboto-flex);
 
-  padding: 44px 35px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  position: relative;
+  padding: 44px 35px 80px 35px;
   min-height: 100vh;
   margin: 0 auto;
   width: 100%;
@@ -497,20 +500,23 @@ body {
 }
 
 .page-footer {
-  margin-top: 50px;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  width: 100%;
   text-align: center;
+  margin-top: 0;
 }
 
 .page-footer a {
-  color: inherit;
-  transition:
-    color 0.2s ease,
-    text-decoration-color 0.2s ease;
+  color: var(--content-brand);
+  text-decoration: none;
+  transition: text-decoration-color 0.2s ease;
 }
 
 .page-footer a:hover,
 .page-footer a:focus-visible {
-  color: var(--content-brand);
   text-decoration: underline;
   text-decoration-color: var(--content-brand);
   text-underline-offset: 0.15em;
@@ -555,6 +561,7 @@ body {
     gap: 60px;
     align-items: start;
     max-width: 1100px;
+    margin-bottom: 0;
   }
 
   .left-container {
@@ -583,7 +590,22 @@ body {
   }
 
   .page-footer {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
     max-width: 1100px;
+    margin-inline: auto;
+    padding-bottom: 0;
+    text-align: center;
+  }
+
+  .page-footer p {
+    grid-column: 1;
+    padding-left: 0;
   }
 }
 
