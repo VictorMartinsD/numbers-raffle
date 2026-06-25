@@ -10,7 +10,7 @@ const drawButtons = document.querySelectorAll(".btn-draw");
 const btnDraw = document.getElementById("btn-draw");
 const btnRestart = document.getElementById("btn-restart");
 const numbersOutput = document.getElementById("numbers-output");
-const resultCountText = document.getElementById("result-count"); 
+const resultCountText = document.getElementById("result-count");
 
 let drawCount = 0;
 
@@ -95,6 +95,80 @@ function generateDrawResults(quantity, min, max, noRepeat) {
   return results;
 }
 
+async function animateNumber(number, index, drawResults) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (index % 2 !== 0 && index > 0) {
+        const prevNumber = numbersOutput.children[index - 1];
+        if (prevNumber) {
+          prevNumber.classList.remove("is-making-room");
+        }
+      }
+
+      const numberElement = document.createElement("div");
+      numberElement.className = "draw-number";
+      
+      const isOnlyNumber = drawResults.length === 1;
+      const isLastOdd = (index === drawResults.length - 1) && (drawResults.length % 2 !== 0);
+      
+      if (isOnlyNumber || isLastOdd) {
+        numberElement.classList.add("is-centered");
+      } else if (index % 2 === 0) {
+        numberElement.classList.add("is-shifting");
+      }
+
+      const tokenBg = document.createElement("div");
+      tokenBg.className = "animated-token-bg";
+
+      const tokenText = document.createElement("span");
+      tokenText.className = "animated-token-text";
+      tokenText.textContent = number;
+
+      numberElement.appendChild(tokenBg);
+      numberElement.appendChild(tokenText);
+      numbersOutput.appendChild(numberElement);
+
+      setTimeout(() => {
+        tokenBg.classList.add("is-visible");
+      }, 50);
+
+      setTimeout(() => {
+        tokenBg.classList.add("is-rotating");
+
+        setTimeout(() => {
+          tokenText.classList.add("is-inverse");
+        }, 444);
+
+      }, 1050);
+
+      setTimeout(() => {
+        tokenText.classList.remove("is-inverse");
+        tokenText.classList.add("is-final");
+        
+        tokenBg.classList.remove("is-visible");
+        tokenBg.classList.add("is-disappearing");
+
+        setTimeout(() => {
+          tokenBg.remove();
+          tokenText.replaceWith(document.createTextNode(number));
+          
+          const isLeftNumberInPair = (index % 2 === 0) && !isOnlyNumber && !isLastOdd;
+
+          if (isLeftNumberInPair) {
+            numberElement.classList.add("is-making-room");
+            setTimeout(() => {
+              resolve(); 
+            }, 500);
+          } else {
+            resolve();
+          }
+        }, 400);
+
+      }, 2100);
+    }, 300);
+  });
+}
+
 function setupPanelToggle() {
   const setupHeader = document.getElementById("setup-header");
   const inputsContainer = document.getElementById("inputs-container");
@@ -103,22 +177,22 @@ function setupPanelToggle() {
   const errorTooltip = document.getElementById("error-tooltip");
   const tooltipText = document.getElementById("error-message");
 
-  btnDraw.addEventListener("click", () => {
-  if (!quantityInput.value || !minValueInput.value || !maxValueInput.value) {
-    tooltipText.textContent = "Nenhum campo pode estar vazio!";
-    errorTooltip.classList.remove("u-hidden");
-    return;
-  }
+  btnDraw.addEventListener("click", async () => {
+    if (!quantityInput.value || !minValueInput.value || !maxValueInput.value) {
+      tooltipText.textContent = "Nenhum campo pode estar vazio!";
+      errorTooltip.classList.remove("u-hidden");
+      return;
+    }
 
-  const quantity = parseInt(quantityInput.value.slice(0, 1), 10);
-  const min = parseInt(minValueInput.value.slice(0, 3), 10);
-  const max = parseInt(maxValueInput.value.slice(0, 3), 10);
-  const noRepeat = noRepeatCheckbox.checked;
+    const quantity = parseInt(quantityInput.value.slice(0, 1), 10);
+    const min = parseInt(minValueInput.value.slice(0, 3), 10);
+    const max = parseInt(maxValueInput.value.slice(0, 3), 10);
+    const noRepeat = noRepeatCheckbox.checked;
 
-  if (min === 0 || max === 0) {
-    tooltipText.textContent = "O valor não pode ser 0.";
-    errorTooltip.classList.remove("u-hidden");
-    return;
+    if (min === 0 || max === 0) {
+      tooltipText.textContent = "O valor não pode ser 0.";
+      errorTooltip.classList.remove("u-hidden");
+      return;
     }
 
     if (min > max) {
@@ -139,22 +213,6 @@ function setupPanelToggle() {
     
     const drawResults = generateDrawResults(quantity, min, max, noRepeat);
 
-    numbersOutput.innerHTML = "";
-    drawResults.forEach((num, index) => {
-      const numberElement = document.createElement("div");
-      numberElement.className = "draw-number";
-      numberElement.textContent = num;
-
-      const isOnlyNumber = drawResults.length === 1;
-      const isLastOdd = (index === drawResults.length - 1) && (drawResults.length % 2 !== 0);
-
-      if (isOnlyNumber || isLastOdd) {
-        numberElement.classList.add("is-centered");
-      }
-
-      numbersOutput.appendChild(numberElement);
-    });
-
     drawCount++;
     resultCountText.textContent = `${drawCount}º Resultado`;
 
@@ -163,6 +221,12 @@ function setupPanelToggle() {
     toggleGroup.classList.add("u-hidden");
     btnDraw.classList.add("u-hidden");
     panelResult.classList.remove("u-hidden");
+
+    numbersOutput.innerHTML = "";
+
+    for (let i = 0; i < drawResults.length; i++) {
+      await animateNumber(drawResults[i], i, drawResults);
+    }
   });
 
   btnRestart.addEventListener("click", () => {
