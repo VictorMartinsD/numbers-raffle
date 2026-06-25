@@ -622,20 +622,6 @@ animation: tooltip-fade 200ms ease-out;
   }
 }
 
-.animated-token {
-  width: 100px;
-  height: 100px;
-  border-radius: 28px;
-  background-color: var(--content-brand);
-  opacity: 1;
-  transform: scale(1);
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-}
-
-.animated-token.is-active {
-  opacity: 1;
-  transform: scale(1);
-}
 
 .numbers-display {
   display: flex;
@@ -644,7 +630,7 @@ animation: tooltip-fade 200ms ease-out;
   align-items: center;
   gap: 16px 4px;
   width: 100%;
-  max-width: 200px;
+  max-width: 204px;
   margin: 0 auto 40px auto;
 }
 
@@ -653,8 +639,12 @@ animation: tooltip-fade 200ms ease-out;
 }
 
 .draw-number {
-  flex: 0 0 calc(50% - 2px);
-  text-align: center;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--content-brand);
   font-family: var(--ff-roboto-mono), 'Roboto Mono', monospace;
   font-weight: 700;
@@ -662,16 +652,75 @@ animation: tooltip-fade 200ms ease-out;
   line-height: 150%;
 }
 
-.draw-number.is-centered {
-  flex: 0 0 100%;
+.draw-number.is-shifting {
+  animation: shift-left 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-.sorteio-animation-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 36px;
-  margin-bottom: 40px;
+@keyframes shift-left {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.draw-number.is-centered {
+  width: 100px;
+  flex: 0 0 auto;
+  margin-inline: auto;
+}
+
+.animated-token-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background-color: var(--content-brand);
+  z-index: 1;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+}
+
+.animated-token-bg.is-visible {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.animated-token-bg.is-rotating {
+  transform: scale(1) rotate(180deg);
+  transition: transform 1s ease-in-out;
+}
+
+.animated-token-bg.is-disappearing {
+  transform: scale(0.9) rotate(180deg);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s linear;
+}
+
+.animated-token-text {
+  position: relative;
+  z-index: 2;
+  transform: scale(1.2);
+  color: transparent;
+  opacity: 0;
+  transition: color 0.3s ease, opacity 0.3s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.animated-token-text.is-inverse {
+  opacity: 1;
+  color: var(--color-inverse);
+}
+
+.animated-token-text.is-final {
+  opacity: 1;
+  color: var(--content-brand);
+  transform: scale(1);
+}
+
+.draw-number.is-making-room {
+  animation: make-room 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes make-room {
+  from { transform: translateX(0); }
+  to { transform: translateX(-52px); }
 }
 
 #panel-result .btn-draw {
