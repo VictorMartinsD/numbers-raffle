@@ -177,6 +177,9 @@ function setupPanelToggle() {
   const panelResult = document.getElementById("panel-result");
   const errorTooltip = document.getElementById("error-tooltip");
   const tooltipText = document.getElementById("error-message");
+  const btnRestart = document.getElementById("btn-restart");
+
+  btnRestart.style.opacity = "0";
 
   btnDraw.addEventListener("click", async () => {
     if (!quantityInput.value || !minValueInput.value || !maxValueInput.value) {
@@ -222,12 +225,17 @@ function setupPanelToggle() {
     toggleGroup.classList.add("u-hidden");
     btnDraw.classList.add("u-hidden");
     panelResult.classList.remove("u-hidden");
+    requestAnimationFrame(() => panelResult.classList.add("is-visible"));
 
     numbersOutput.innerHTML = "";
 
     for (let i = 0; i < drawResults.length; i++) {
       await animateNumber(drawResults[i], i, drawResults);
     }
+
+    btnRestart.classList.add("is-visible");
+    btnRestart.style.opacity = "1";
+    btnRestart.style.display = "flex";
   });
 
   btnRestart.addEventListener("click", () => {
@@ -235,8 +243,20 @@ function setupPanelToggle() {
     inputsContainer.classList.remove("u-hidden");
     toggleGroup.classList.remove("u-hidden");
     btnDraw.classList.remove("u-hidden");
-    panelResult.classList.add("u-hidden");
+    panelResult.classList.remove("is-visible");
     numbersOutput.innerHTML = "";
+    btnRestart.classList.remove("is-visible");
+    btnRestart.style.opacity = "0";
+    btnRestart.style.display = "none";
+
+    setTimeout(() => {
+        setupHeader.classList.remove("u-hidden");
+        inputsContainer.classList.remove("u-hidden");
+        toggleGroup.classList.remove("u-hidden");
+        btnDraw.classList.remove("u-hidden");
+        panelResult.classList.add("u-hidden");
+        numbersOutput.innerHTML = "";
+    }, 300);
   });
 
   const hideError = () => errorTooltip.classList.add("u-hidden");
