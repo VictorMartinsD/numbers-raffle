@@ -434,33 +434,21 @@ body {
   mask-composite: exclude;
 }
 
-.btn-draw.is-animating {
+.btn-draw:hover {
   animation: btn-fill-hover 2s ease 1 both;
 }
 
-.btn-draw.is-animating::before {
+.btn-draw:hover::before {
   animation: btn-border-sweep 2s linear 1 both;
 }
 
-#panel-setup .btn-draw.is-animating .icon {
+#btn-draw:hover .icon {
   animation: draw-arrow-shift 2s ease 1 both;
 }
 
-#btn-restart.btn-draw.is-animating .loading-circle {
+#btn-restart:hover .loading-circle {
   transform-origin: center;
-  animation: restart-ring-spin 2s linear 1 both;
-}
-
-#btn-restart.btn-draw.is-animating {
-  animation-duration: 1.5s;
-}
-
-#btn-restart.btn-draw.is-animating::before {
-  animation-duration: 1.5s;
-}
-
-#btn-restart.btn-draw.is-animating .loading-circle {
-  animation-duration: 1.5s;
+  animation: restart-ring-spin 1.5s linear 1 both;
 }
 
 .btn-draw span {
