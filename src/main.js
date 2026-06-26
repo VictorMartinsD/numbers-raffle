@@ -18,14 +18,17 @@ const DRAW_BUTTON_ANIMATION_CLASS = "is-animating";
 
 function setupButtonAnimations() {
   drawButtons.forEach((button) => {
+    button.classList.remove(DRAW_BUTTON_ANIMATION_CLASS);
+
     button.addEventListener("mouseenter", () => {
       if (button.classList.contains(DRAW_BUTTON_ANIMATION_CLASS)) return;
       button.classList.add(DRAW_BUTTON_ANIMATION_CLASS);
     });
 
     button.addEventListener("animationend", (event) => {
-      if (event.animationName !== "btn-fill-hover") return;
-      button.classList.remove(DRAW_BUTTON_ANIMATION_CLASS);
+      if (event.animationName === "btn-fill-hover") {
+        button.classList.remove(DRAW_BUTTON_ANIMATION_CLASS);
+      }
     });
   });
 }
@@ -177,7 +180,6 @@ function setupPanelToggle() {
   const panelResult = document.getElementById("panel-result");
   const errorTooltip = document.getElementById("error-tooltip");
   const tooltipText = document.getElementById("error-message");
-  const btnRestart = document.getElementById("btn-restart");
 
   btnRestart.style.opacity = "0";
 
@@ -235,27 +237,23 @@ function setupPanelToggle() {
 
     btnRestart.classList.add("is-visible");
     btnRestart.style.opacity = "1";
+    btnRestart.classList.remove("is-animating");
     btnRestart.style.display = "flex";
   });
 
   btnRestart.addEventListener("click", () => {
-    setupHeader.classList.remove("u-hidden");
-    inputsContainer.classList.remove("u-hidden");
-    toggleGroup.classList.remove("u-hidden");
-    btnDraw.classList.remove("u-hidden");
+    panelResult.classList.add("u-hidden");
     panelResult.classList.remove("is-visible");
-    numbersOutput.innerHTML = "";
     btnRestart.classList.remove("is-visible");
     btnRestart.style.opacity = "0";
     btnRestart.style.display = "none";
+    numbersOutput.innerHTML = "";
 
     setTimeout(() => {
-        setupHeader.classList.remove("u-hidden");
-        inputsContainer.classList.remove("u-hidden");
-        toggleGroup.classList.remove("u-hidden");
-        btnDraw.classList.remove("u-hidden");
-        panelResult.classList.add("u-hidden");
-        numbersOutput.innerHTML = "";
+      setupHeader.classList.remove("u-hidden");
+      inputsContainer.classList.remove("u-hidden");
+      toggleGroup.classList.remove("u-hidden");
+      btnDraw.classList.remove("u-hidden");
     }, 300);
   });
 
