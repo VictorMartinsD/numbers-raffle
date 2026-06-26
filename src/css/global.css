@@ -399,7 +399,12 @@ body {
 }
 
 .btn-draw {
+  display: flex;
+  height: 54px;
   position: relative;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 10;
   isolation: isolate;
   overflow: hidden;
   margin-top: 40px;
@@ -434,21 +439,21 @@ body {
   mask-composite: exclude;
 }
 
-.btn-draw:hover {
-  animation: btn-fill-hover 2s ease 1 both;
+.btn-draw.is-animating {
+  animation: btn-fill-hover 2s ease forwards;
 }
 
-.btn-draw:hover::before {
-  animation: btn-border-sweep 2s linear 1 both;
+.btn-draw.is-animating::before {
+  animation: btn-border-sweep 2s linear forwards;
 }
 
-#btn-draw:hover .icon {
-  animation: draw-arrow-shift 2s ease 1 both;
+#btn-draw.is-animating .icon {
+  animation: draw-arrow-shift 2s ease forwards;
 }
 
-#btn-restart:hover .loading-circle {
+#btn-restart.is-animating .loading-circle {
   transform-origin: center;
-  animation: restart-ring-spin 1.5s linear 1 both;
+  animation: restart-ring-spin 1.5s linear forwards;
 }
 
 .btn-draw span {
@@ -488,13 +493,9 @@ body {
 }
 
 .page-footer {
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  width: 100%;
   text-align: center;
-  margin-top: 0;
+  padding: 40px 0 20px 0;
+  width: 100%;
 }
 
 .page-footer a {
@@ -511,6 +512,13 @@ body {
 }
 
 @media (max-width: 48em) {
+
+  body {
+    background-size: auto; 
+    background-repeat: repeat-y;
+    background-position: top center;
+  }
+
   .brand-header {
     justify-content: center;
     margin-bottom: 46px;
@@ -578,17 +586,16 @@ body {
   }
 
   .page-footer {
-    position: absolute;
+    position: fixed;
     bottom: 40px;
     left: 0;
     right: 0;
+    margin: 0 auto;
+    max-width: 1100px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
-    max-width: 1100px;
-    margin-inline: auto;
     padding-bottom: 0;
-    text-align: center;
   }
 
   .page-footer p {
