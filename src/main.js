@@ -31,17 +31,21 @@ function setupButtonAnimations() {
 }
 
 function setupInputValidations() {
+  const errorTooltip = document.getElementById("error-tooltip");
+  const errorMessage = document.getElementById("error-message");
+
   const limitLength = (inputElement, maxLength, allowZero = true) => {
     inputElement.addEventListener("keydown", (e) => {
       const invalidChars = ["-", "+", ".", ",", "e", "E"];
+      if (invalidChars.includes(e.key)) e.preventDefault();
       
-      if (invalidChars.includes(e.key)) {
-        e.preventDefault();
-        return;
-      }
-
-      if (!allowZero && e.key === "0" && e.target.value.length === 0) {
-        e.preventDefault();
+      if (inputElement.id === "quantity") {
+        if (e.key === "0" || e.key === "9") {
+          e.preventDefault();
+          errorMessage.textContent = "Digite um número de 1 a 8.";
+          errorTooltip.classList.remove("u-hidden");
+          setTimeout(() => errorTooltip.classList.add("u-hidden"), 2000);
+        }
       }
     });
 
@@ -50,15 +54,12 @@ function setupInputValidations() {
         e.target.value = "";
         return;
       }
-
       if (e.target.value.length > maxLength) {
         e.target.value = e.target.value.slice(0, maxLength);
       }
     });
 
-    inputElement.addEventListener("focus", (e) => {
-      e.target.select();
-    });
+    inputElement.addEventListener("focus", (e) => e.target.select());
   };
 
   limitLength(quantityInput, 1, false);
