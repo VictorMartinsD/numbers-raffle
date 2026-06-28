@@ -99,6 +99,15 @@ function generateDrawResults(quantity, min, max, noRepeat) {
   return results;
 }
 
+function announce(message) {
+  const announcer = document.createElement("div");
+  announcer.setAttribute("aria-live", "assertive");
+  announcer.className = "u-hidden";
+  announcer.textContent = message;
+  document.body.appendChild(announcer);
+  setTimeout(() => announcer.remove(), 1000);
+}
+
 async function animateNumber(number, index, drawResults) {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -155,6 +164,8 @@ async function animateNumber(number, index, drawResults) {
         setTimeout(() => {
           tokenBg.remove();
           tokenText.replaceWith(document.createTextNode(number));
+
+          announce(`Número sorteado: ${number}`);
           
           const isLeftNumberInPair = (index % 2 === 0) && !isOnlyNumber && !isLastOdd;
 
@@ -234,6 +245,9 @@ function setupPanelToggle() {
     for (let i = 0; i < drawResults.length; i++) {
       await animateNumber(drawResults[i], i, drawResults);
     }
+
+    resultCountText.setAttribute('tabindex', '-1');
+    resultCountText.focus();
 
     btnRestart.classList.add("is-visible");
     btnRestart.style.opacity = "1";
