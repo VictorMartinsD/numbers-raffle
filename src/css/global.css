@@ -9,17 +9,17 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background-primary); 
+  background: var(--background-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--background-tertiary); 
+  background-color: var(--background-tertiary);
   border-radius: var(--radius-md, 4px);
   border: 2px solid var(--background-primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--content-tertiary); 
+  background-color: var(--content-tertiary);
 }
 
 body {
@@ -494,11 +494,14 @@ body {
 }
 
 @media (max-width: 48em) {
-
   body {
-    background-size: auto; 
+    background-size: auto;
     background-repeat: repeat-y;
     background-position: top center;
+  }
+
+  .left-container {
+    display: contents;
   }
 
   .brand-header {
@@ -511,19 +514,6 @@ body {
     flex-direction: column;
     gap: 36px;
   }
-
-  .hero-section {
-    order: 1;
-  }
-
-  .left-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .left-container { order: 1; }
-  .draw-panel { order: 2; }
-  .faq-section { order: 3; }
 
   .draw-panel {
     order: 2;
@@ -539,7 +529,15 @@ body {
   body {
     padding-bottom: 187px;
   }
-  
+
+  .left-container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    align-self: start;
+    height: min-content;
+  }
+
   .brand-header {
     justify-content: flex-start;
     max-width: 1128px;
@@ -555,25 +553,14 @@ body {
     max-width: 1100px;
   }
 
-  .left-container {
-    grid-column: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    align-self: start; 
-    height: min-content;
-  }
-
   .draw-panel {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1;
+    align-self: start;
   }
 
-  .faq-section { 
-    order: unset; 
-    grid-column: 1;
-    grid-row: 2;
-    margin-top: -60px;
+  .faq-section {
+    margin-top: 0;
   }
 
   .panel-header p {
@@ -611,22 +598,22 @@ body {
 }
 
 .error-tooltip {
-position: absolute;
-bottom: calc(100% + 0px);
-left: 50%;
-transform: translateX(-50%);
-display: flex;
-align-items: center;
-gap: 8px;
-background-color: #f35656;
-color: var(--content-primary);
-padding: 8px 12px;
-border-radius: var(--radius-md);
-font: var(--label-small);
-white-space: nowrap;
-z-index: 10;
-box-shadow: 0 4px 12px rgba(247, 70, 70, 0.3);
-animation: tooltip-fade 200ms ease-out;
+  position: absolute;
+  bottom: calc(100% + 0px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f35656;
+  color: var(--content-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font: var(--label-small);
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(247, 70, 70, 0.3);
+  animation: tooltip-fade 200ms ease-out;
 }
 
 .error-tooltip small {
@@ -664,7 +651,7 @@ animation: tooltip-fade 200ms ease-out;
   align-items: center;
   justify-content: center;
   color: var(--content-brand);
-  font-family: var(--ff-roboto-mono), 'Roboto Mono', monospace;
+  font-family: var(--ff-roboto-mono), "Roboto Mono", monospace;
   font-weight: 700;
   font-size: 3rem;
   line-height: 150%;
@@ -675,8 +662,14 @@ animation: tooltip-fade 200ms ease-out;
 }
 
 @keyframes shift-left {
-  from { transform: translateX(30px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .draw-number.is-centered {
@@ -693,7 +686,9 @@ animation: tooltip-fade 200ms ease-out;
   z-index: 1;
   transform: scale(0);
   opacity: 0;
-  transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+  transition:
+    transform 1s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.3s ease;
 }
 
 .animated-token-bg.is-visible {
@@ -709,7 +704,9 @@ animation: tooltip-fade 200ms ease-out;
 .animated-token-bg.is-disappearing {
   transform: scale(0.9) rotate(180deg);
   opacity: 0;
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s linear;
+  transition:
+    transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.4s linear;
 }
 
 .animated-token-text {
@@ -718,7 +715,10 @@ animation: tooltip-fade 200ms ease-out;
   transform: scale(1.2);
   color: transparent;
   opacity: 0;
-  transition: color 0.3s ease, opacity 0.3s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transition:
+    color 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .animated-token-text.is-inverse {
@@ -737,8 +737,12 @@ animation: tooltip-fade 200ms ease-out;
 }
 
 @keyframes make-room {
-  from { transform: translateX(0); }
-  to { transform: translateX(-52px); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-52px);
+  }
 }
 
 #panel-result .btn-draw {
